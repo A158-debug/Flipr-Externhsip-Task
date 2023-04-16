@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: node_backend_api
+    container_name: node_backend
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    volumes:
+       - ./server:/app
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: react_frontend_app
+    container_name: react_frontend
+    restart: unless-stopped
+
+    ports:
+    - 3000:3000
+    volumes:
+    - ./frontend:/app
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
