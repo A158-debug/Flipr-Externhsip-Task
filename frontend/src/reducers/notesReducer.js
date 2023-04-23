@@ -7,6 +7,7 @@ const notesReducer=  (notes = [], action) => {
     case "CREATE":
       return [...notes, action.payload];
     case "UPDATE":
+    case "LIKE":
       return notes.map((note) => (note._id === action.payload._id ? action.payload : note));
     case "DELETE":
       return notes.filter((note) => note._id !== action.payload);

@@ -1,37 +1,29 @@
-import React,{useEffect,useState} from 'react'
-import { useDispatch } from 'react-redux';
-import { getNotes } from './actions/notes';
-import { Container, AppBar, Typography, Grow, Grid } from '@mui/material';
-import Notes from './components/AllNotes';
-import Form from './components/Form';
+import React from 'react'
+
+import { Container } from '@mui/material';
+
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Auth from './components/Auth/Auth';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 
 
 const App = () => {
-  const [currentId, setCurrentId] = useState(null)
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getNotes());
-  }, [currentId,dispatch]);
 
   return (
-    <Container maxWidth="lg">
-    <AppBar position="static" color="inherit">
-      <Typography variant="h2" align="center">Note Making</Typography>
-    </AppBar>
-    <Grow in>
-      <Container>
-        <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-          <Grid item xs={12} sm={7}>
-            <Notes setCurrentId={setCurrentId}/>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Form currentId={currentId} setCurrentId={setCurrentId} />
-          </Grid>
-        </Grid>
-      </Container>
-    </Grow>
-  </Container>
+    <>
+    <BrowserRouter>
+        <Container maxWidth="xl">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth" element={<Auth />} />
+          </Routes>
+        </Container>
+      </BrowserRouter>
+    </>
   )
 }
 

@@ -22,7 +22,6 @@ export const createNote = (note) => async(dispatch)=>{
 }
 
 export const updateNote = (id,note) => async(dispatch)=>{
-    console.log(note)
     try {
         const {data} = await api.updateNote(id,note);
         dispatch({type:'UPDATE',payload:data})
@@ -37,5 +36,15 @@ export const deleteNote = (id) => async (dispatch) => {
       dispatch({ type: "DELETE", payload: id }); 
     } catch (error) {
       console.log(error);
+    }
+};
+
+export const likeNote = (id) => async (dispatch) => {
+    try {
+      const { data } = await api.likeNote(id);
+      dispatch({ type: "LIKE", payload: data });
+
+    } catch (error) {
+      console.log(error.message);
     }
   };

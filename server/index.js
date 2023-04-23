@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
-import {getNotes,createNote,updateNote,deleteNote} from './controllers/notes.js'
+import {getNotes,createNote,updateNote,deleteNote, likeNote} from './controllers/notes.js'
 
 const app = express();
 const PORT = 5000;
@@ -15,6 +15,7 @@ app.get('/', getNotes);
 app.post('/', createNote);
 app.patch('/:id', updateNote);
 app.delete('/:id', deleteNote);
+app.patch('/:id/likeNote', likeNote);
 
 const CONNECTION_URL = 'mongodb+srv://A158_Debug:xtey3CIJlVbjY4Ry@cluster0.zaeyu.mongodb.net/test';
 

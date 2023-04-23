@@ -1,9 +1,10 @@
 import React from 'react'
 import { Card, CardActions, CardContent, Typography,Button } from '@mui/material';
-import {deleteNote} from '../actions/notes';
+import {deleteNote, likeNote} from '../actions/notes';
 import { useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 
 
 const Note = ({note,setCurrentId}) => {
@@ -19,7 +20,8 @@ const Note = ({note,setCurrentId}) => {
 
       <CardActions>
         <Button size="small" color="primary" onClick={()=>setCurrentId(note._id)}><MoreHorizIcon fontSize="small" /> Update </Button>
-        <Button size="small" color="primary" onClick={() => dispatch(deleteNote(note._id))}><DeleteIcon fontSize="small"  /> Delete</Button>
+        <Button size="small" color="primary" onClick={() => dispatch(likeNote(note._id))}><ThumbUpOffAltIcon fontSize="small" /> Like {note?.likeCount} </Button>
+        <Button size="small" color="primary" onClick={() => dispatch(deleteNote(note._id))}><DeleteIcon fontSize="small"/></Button>
       </CardActions>
     </Card>
   )

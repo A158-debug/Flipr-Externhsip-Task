@@ -7,4 +7,6 @@ export const createNote = (newNote) => axios.post(url, newNote);
 export const updateNote = (id, updatedNote) => axios.patch(`http://localhost:5000/${id}`, updatedNote);
 export const deleteNote = (id) => axios.delete(`http://localhost:5000/${id}`);
 
+export const likeNote = (id) => axios.patch(`http://localhost:5000/${id}/likeNote`);
+
 
