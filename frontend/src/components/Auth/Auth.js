@@ -1,8 +1,9 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import jwt_decode from 'jwt-decode'
 
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import Input from './Input';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
@@ -10,7 +11,7 @@ import LockIcon from '@mui/icons-material/Lock';
 
 const style = {
   paper: {
-    marginTop:'2rem',
+    marginTop: '2rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -18,18 +19,18 @@ const style = {
   },
   root: {
     '& .MuiTextField-root': {
-      margin:'5px'
+      margin: '5px'
     },
   },
   avatar: {
-    margin:'10px'
+    margin: '10px'
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop:'2rem'
+    marginTop: '2rem'
   },
   submit: {
-    margin:'20px 0 10px 0'
+    margin: '20px 0 10px 0'
   },
   googleButton: {
     // marginBottom: theme.spacing(2),
@@ -53,6 +54,30 @@ const Auth = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);
   };
+
+  const handleCallbackSuccess = async (response) => {
+    console.log("response :", response);
+    var userObject = jwt_decode(response?.credential)
+    console.log("userObject :", userObject);
+    try {
+      dispatch({ type: 'AUTH', data: { userObject } })
+      navigate('/');
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: "967162800646-i5fbcs2il2vtkdg9i7fnkjr0h696r089.apps.googleusercontent.com",
+      callback: handleCallbackSuccess
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      { theme: "outline", size: "large" }
+    )
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -83,6 +108,10 @@ const Auth = () => {
             <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit}>
               {isSignup ? 'Sign Up' : 'Sign In'}
             </Button>
+
+            {/* ---------- Google Button ----------- */}
+            <div id="signInDiv"></div>
+
             <Grid container justify="flex-end">
               <Grid item>
                 <Button onClick={switchMode}>

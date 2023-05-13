@@ -31,8 +31,8 @@ const Form = ({ setCurrentId, currentId }) => {
 
     return (
 
-        <Paper>
-            <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Paper style={{padding:'1rem'}}>
+            <form autoComplete="off" noValidate onSubmit={handleSubmit} sx={{display:'flex',flexWrap:'wrap',justifyContent: 'center'}}>
                 <Typography variant="h6">{currentId ? `Editing : ${noteData.title}` : 'Creating a Memory'}</Typography>
 
                 <TextField name="title" variant="outlined" label="Title" fullWidth value={noteData.title}
@@ -41,7 +41,7 @@ const Form = ({ setCurrentId, currentId }) => {
                 <TextField name="message" variant="outlined" label="Message" fullWidth multiline rows={4}
                     value={noteData.message} onChange={(e) => setNoteData({ ...noteData, message: e.target.value })} />
 
-                <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+                <Button variant="contained" color="primary" size="large" type="submit" fullWidth style={{marginBottom:'10px'}}>Submit</Button>
                 <Button variant="contained" color="secondary" size="small" fullWidth onClick={clear}>Clear</Button>
             </form>
         </Paper>

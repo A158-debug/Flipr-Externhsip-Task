@@ -2,7 +2,6 @@
 const notesReducer=  (notes = [], action) => {
   switch (action.type) {
     case "FETCH_ALL":
-      // console.log(action.payload)
       return action.payload.noteMessage;
     case "CREATE":
       return [...notes, action.payload];
