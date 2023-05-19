@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react'
 import jwt_decode from 'jwt-decode'
 
 import { useDispatch } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { signin, signup } from '../../actions/auth';
 
 import Input from './Input';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
@@ -38,7 +39,7 @@ const style = {
   },
 }
 
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
+const initialState = { given_name: '', family_name: '', email: '', password: '', confirmPassword: '' };
 
 const Auth = () => {
   const [form, setForm] = useState(initialState);
@@ -49,13 +50,16 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
 
+
+  //------------ For sign in ---------------
   const switchMode = () => {
     setForm(initialState);
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);
   };
 
-  const handleCallbackSuccess = async (response) => {
+  //------- After clicking on Google button ----------
+  const handleCallbackSuccess =  (response) => {
     console.log("response :", response);
     var userObject = jwt_decode(response?.credential)
     console.log("userObject :", userObject);
@@ -67,6 +71,7 @@ const Auth = () => {
     }
   }
 
+  //---- For googel authentication -------------------
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
@@ -77,14 +82,21 @@ const Auth = () => {
       document.getElementById("signInDiv"),
       { theme: "outline", size: "large" }
     )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (isSignup) {
+      dispatch(signup(form, navigate));
+    } else {
+      dispatch(signin(form, navigate));
+    }
 
   };
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
   return (
     <>
       <Container component="main" maxWidth="xs">
@@ -97,8 +109,8 @@ const Auth = () => {
             <Grid container spacing={2}>
               {isSignup && (
                 <>
-                  <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
-                  <Input name="lastName" label="Last Name" handleChange={handleChange} half />
+                  <Input name="given_name" label="given_name Name" handleChange={handleChange} autoFocus half />
+                  <Input name="family_name" label="family_name" handleChange={handleChange} half />
                 </>
               )}
               <Input name="email" label="Email Address" handleChange={handleChange} type="email" />

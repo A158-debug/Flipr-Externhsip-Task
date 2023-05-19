@@ -41,9 +41,16 @@ export const deleteNote = async (req, res) => {
 
 export const likeNote = async (req, res) => {
     const { id } = req.params;
+
+    if(!req.userId) return res.json({message: "Unauthticated"})
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     
     const post = await NoteSchema.findById(id);
-    const updatedPost = await NoteSchema.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
+
+    const index = post.likes.findIndex((id)=>id=== String(req.userId));
+    if( index === -1 ) post.likes.push(req.userId);                // --- Like the post ----
+    else post.likes = post.likes.filter((id)=> id !== req.userId)  // --- Dislike the post -----
+    
+    const updatedPost = await NoteSchema.findByIdAndUpdate(id, post, { new: true });
     res.json(updatedPost);
 }

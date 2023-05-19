@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const noteSchema = ({
     title:String,
     message:String,
-    likeCount: {
-        type: Number,
-        default: 0,
+    likes: {
+        type: [String],
+        default: [],
     },
 })
 const NoteSchema = mongoose.model('NoteSchema',noteSchema);

@@ -40,6 +40,7 @@ const classes = {
     },
 }
 
+
 const Navbar = () => {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -58,12 +59,12 @@ const Navbar = () => {
         <AppBar position="static" color="inherit" style={classes.appBar}>
             <Typography variant="h2" align="center">WriteMight</Typography>
             <Toolbar style={classes.toolbar}>
-                {user?.userObject ? (
+                {user?.result ? (
                     <div style={classes.profile}>
-                        <Avatar style={classes.purple} alt={user?.userObject?.given_name} src={user?.userObject?.picture}>
-                            {user?.userObject?.given_name.charAt(0)}
+                        <Avatar style={classes.purple} alt={user?.result.name} src={user?.result?.picture}>
+                            {user?.result.name.charAt(0)}
                         </Avatar>
-                        <Typography style={classes.userName} variant="h6">{user?.userObject?.given_name}</Typography>
+                        <Typography style={classes.userName} variant="h6">{user?.result.name}</Typography>
                         <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
                     </div>
                 ) : (
