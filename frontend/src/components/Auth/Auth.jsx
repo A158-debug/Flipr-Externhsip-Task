@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import jwt_decode from 'jwt-decode'
 
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,8 @@ import { signin, signup } from '../../actions/auth';
 import Input from './Input';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
+
+import { GoogleLogin } from '@react-oauth/google';
 
 const style = {
   paper: {
@@ -59,31 +61,18 @@ const Auth = () => {
   };
 
   //------- After clicking on Google button ----------
-  const handleCallbackSuccess =  (response) => {
-    console.log("response :", response);
-    var userObject = jwt_decode(response?.credential)
-    console.log("userObject :", userObject);
+  const handleCallbackSuccess = (credentialResponse) => {
+    const token = credentialResponse?.credential;
+    const result = jwt_decode(token);
+
+
     try {
-      dispatch({ type: 'AUTH', data: { userObject } })
+      dispatch({ type: 'AUTH', data: { result, token } })
       navigate('/');
     } catch (error) {
       console.log(error)
     }
   }
-
-  //---- For googel authentication -------------------
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: "967162800646-i5fbcs2il2vtkdg9i7fnkjr0h696r089.apps.googleusercontent.com",
-      callback: handleCallbackSuccess
-    });
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      { theme: "outline", size: "large" }
-    )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -122,7 +111,14 @@ const Auth = () => {
             </Button>
 
             {/* ---------- Google Button ----------- */}
-            <div id="signInDiv"></div>
+            {/* <div id="signInDiv"></div> */}
+
+            <GoogleLogin
+              onSuccess={handleCallbackSuccess}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
 
             <Grid container justify="flex-end">
               <Grid item>

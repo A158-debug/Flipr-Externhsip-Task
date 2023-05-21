@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.get('/',getNotes);
 router.post('/', auth,createNote);
-router.patch('/:id',auth, updateNote);
+router.patch('/:id',auth,updateNote);
 router.delete('/:id',auth, deleteNote);
-router.patch('/:id/likeNote',auth, likeNote);
+router.patch('/:id/likePost',auth, likeNote);
 
 export default router;

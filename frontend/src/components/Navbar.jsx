@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -53,9 +53,11 @@ const Navbar = () => {
         navigate('/auth');
         setUser(null);
     };
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [location]);
 
     return (
-
         <AppBar position="static" color="inherit" style={classes.appBar}>
             <Typography variant="h2" align="center">WriteMight</Typography>
             <Toolbar style={classes.toolbar}>

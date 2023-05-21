@@ -50,7 +50,7 @@ export const likeNote = async (req, res) => {
     const index = post.likes.findIndex((id)=>id=== String(req.userId));
     if( index === -1 ) post.likes.push(req.userId);                // --- Like the post ----
     else post.likes = post.likes.filter((id)=> id !== req.userId)  // --- Dislike the post -----
-    
     const updatedPost = await NoteSchema.findByIdAndUpdate(id, post, { new: true });
+   
     res.json(updatedPost);
 }
