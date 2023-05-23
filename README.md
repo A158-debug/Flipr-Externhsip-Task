@@ -1,6 +1,16 @@
-1. Open the terminal in the root directory
-2. Run the command `docker-compose up` in ther terminal
+# Frontend
 
-Frontend is running on port 3000
-
-Server is running on port 5000
+## Steps to setup locally :
+- Make sure that you have [Node.js](https://nodejs.org/en/download/) installed on your machine
+- If you are in the main directory then navigate to the frontend directory
+```
+cd frontend
+```
+- Install dependencies
+```
+npm install
+```
+- Run `development server`
+```
+npm start
+```
