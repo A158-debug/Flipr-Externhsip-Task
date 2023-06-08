@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Auth from './components/Auth/Auth';
 import PostDetails from './components/PostDetails';
+import CreatorOrTag from './components/CreatorOrTag'
 
 import { BrowserRouter, Routes, Route,Navigate  } from 'react-router-dom';
 
@@ -19,8 +20,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/posts"/>} />
             <Route path="/posts" element={<Home />} />
-            <Route path="/auth" element={<Auth />} />
+            <Route path="/posts/search" element={<Home/>} />
             <Route path="/posts/:id"  element={<PostDetails/>} />
+            <Route path="/creators/:name" element={<CreatorOrTag/>} />
+            <Route path="/tags/:name" element={<CreatorOrTag/>} />
             <Route path="/auth"  element={!user ? ( <Auth />) :( <Navigate replace to={"/posts"} />)} />
           </Routes>
         </Container>

@@ -3,47 +3,108 @@ import * as api from '../api/index'
 // redux thunk is used --> so that data can be fetched asynchronously
 // it just add one more arrow fucntion and instead of returning we just have tp dispatch that action
 
-export const getNotes = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
   try {
-    const { data } = await api.fetchNotes();
-    dispatch({ type: 'FETCH_ALL', payload: data });
-  } catch (error) {
-    console.log(error)
-  }
-}
+    dispatch({ type: "START_LOADING" });
+    const { data: { data, currentPage, numberOfPages } } = await api.fetchPosts(page);
 
-export const createNote = (note) => async (dispatch) => {
-  try {
-    const { data } = await api.createNote(note);
-    dispatch({ type: 'CREATE', payload: data });
-  } catch (error) {
-    console.log(error)
-  }
-}
+    console.log(Array.isArray(data))
 
-export const updateNote = (id, note) => async (dispatch) => {
-  try {
-    const { data } = await api.updateNote(id, note);
-    dispatch({ type: 'UPDATE', payload: data })
+    dispatch({ type: "FETCH_ALL", payload: { data, currentPage, numberOfPages } });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-export const deleteNote = (id) => async (dispatch) => {
+export const getPost = (id) => async (dispatch) => {
   try {
-    await api.deleteNote(id);
+    dispatch({ type: "START_LOADING" });
+
+    const { data } = await api.fetchPost(id);
+
+    dispatch({ type: "FETCH_POST", payload: { post: data } });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createPost = (post, navigate) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data } = await api.createPost(post);
+    console.log({data})
+    dispatch({ type: "CREATE", payload: data });
+
+    navigate(`/posts/${data._id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePost = (id, post) => async (dispatch) => {
+  try {
+    const { data } = await api.updatePost(id, post);
+
+    dispatch({ type: "UPDATE", payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    await api.deletePost(id);
     dispatch({ type: "DELETE", payload: id });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const likeNote = (id) => async (dispatch) => {
+export const likePost = (id) => async (dispatch) => {
+  const user = JSON.parse(localStorage.getItem('profile'));
+
   try {
-    const { data } = await api.likeNote(id);
+    const { data } = await api.likePost(id, user?.token);
+
     dispatch({ type: "LIKE", payload: data });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
+  }
+};
+
+export const commentPost = (value, id) => async (dispatch) => {
+  try {
+    const { data } = await api.comment(value, id);
+
+    dispatch({ type: "COMMENT", payload: data });
+
+    return data.comments;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPostsByCreator = (name) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data: { data } } = await api.fetchPostsByCreator(name);
+
+    dispatch({ type: "FETCH_BY_CREATOR", payload: { data } });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+
+    dispatch({ type: "FETCH_BY_SEARCH", payload: { data } });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    console.log(error);
   }
 };

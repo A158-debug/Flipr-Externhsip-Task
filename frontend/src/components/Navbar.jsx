@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const classes = {
     appBar: {
-        borderRadius: 15,
+        // borderRadius: 15,
         margin: '30px 0',
         display: 'flex',
         flexDirection: 'row',
