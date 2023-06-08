@@ -7,14 +7,15 @@ import FileBase from "react-file-base64";
 import { MuiChipsInput } from "mui-chips-input";
 
 const Form = ({ setCurrentId, currentId }) => {
+  const [tags, setTags] = useState([]); // for chip Inputs
   const [postData, setPostData] = useState({
     title: "",
     message: "",
-    tags: [],
+    tags: tags,
     selectedFile: "",
   });
   const post = useSelector((state) =>
-    currentId ? state.notesReducer.find((e) => e._id === currentId) : null
+    currentId ? state.postReducer.posts?.find((e) => e._id === currentId) : null
   );
   const user = JSON.parse(localStorage.getItem("profile"));
 
@@ -32,19 +33,16 @@ const Form = ({ setCurrentId, currentId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (currentId) {
-      dispatch(
-        updatePost(currentId, { ...postData, name: user?.result?.name })
-      );
-      clear();
-    } else {
-      console.log("Dispatch to create post")
-      dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
-      clear();
-    }
+    const name  = user?.result?.given_name + ' ' + user?.result?.family_name
+
+    if (currentId)  dispatch(updatePost(currentId, { ...postData, name: name }));
+    else  dispatch(createPost({ ...postData, name: name}));
+
+    clear()
   };
 
   const handleAddChip = (tag) => {
+    console.log(tag)
     setPostData({ ...postData, tags: [...postData.tags, tag] });
   };
 

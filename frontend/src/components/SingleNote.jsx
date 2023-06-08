@@ -15,9 +15,9 @@ const Note = ({post, setCurrentId} ) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   // const userId = user?.result.googleId || user?.result?._id;
 
-  const openPost = (e) => {
-    navigate(`/posts/${post._id}`);
-  };
+  // const openPost = (e) => {
+  //   navigate(`/posts/${post._id}`);
+  // };
 
 
   return (
@@ -25,7 +25,7 @@ const Note = ({post, setCurrentId} ) => {
       <ButtonBase
         component="span"
         name="test"
-        onClick={openPost}
+        // onClick={openPost}
       >
         <CardMedia image={post?.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post?.title} />
         <div>

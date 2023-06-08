@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const Notes = ({ setCurrentId }) => {
   const { posts, isLoading } = useSelector((state) => {
     // console.log(state)
-    // console.log(state.postReducer.posts)
+    // console.log(state.postReducer)
     return state.postReducer
   });
 

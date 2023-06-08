@@ -12,8 +12,7 @@ const postReducer = (state = { isLoading: true, posts: [] }, action) => {
       return { ...state, isLoading: false }
 
     case "FETCH_ALL":
-      console.log(state.posts)
-      console.log(Array.isArray(action.payload.data))
+
       return {
         ...state,
         posts: action.payload.data,
