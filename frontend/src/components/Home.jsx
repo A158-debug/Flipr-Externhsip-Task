@@ -4,7 +4,6 @@ import {
   Grow,
   Grid,
   Paper,
-  AppBar,
   TextField,
   Button,
 } from "@mui/material";
@@ -61,18 +60,19 @@ const Home = () => {
   return (
     <>
       <Grow in>
-        <Container>
+        <Container maxWidth="xl" sx={{ position: "relative", top: "8rem" }}>
           <Grid
             container
             justify="space-between"
             alignItems="stretch"
             spacing={3}
+            style={{ width: "100%" }}
           >
             <Grid item xs={12} sm={6} md={9}>
               <Notes setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <AppBar position="static" color="inherit">
+              <Paper style={{ padding: "1rem" }}>
                 <TextField
                   onKeyDown={handleKeyPress}
                   name="search"
@@ -87,18 +87,20 @@ const Home = () => {
                   value={tags}
                   onDeleteChip={(chip) => handleDeleteChip(chip)}
                   onChange={(chip) => handleAddChip(chip)}
-                  style={{ margin: "10px 0" }}
+                  style={{ margin: "10px 0",width: "100%"  }}
                   hideClearAll
                 />
                 <Button
                   onClick={searchPost}
                   variant="contained"
-                  color="primary"
+                  color="secondary"
+                  size="large"
+                  fullWidth
                 >
                   Search
                 </Button>
-              </AppBar>
-              <Form currentId={currentId} setCurrentId={setCurrentId} />
+              </Paper>
+              <Form currentId={currentId} setCurrentId={setCurrentId}/>
               {!searchQuery && !tags.length && (
                 <Paper elevation={6}>
                   <Pagination page={page} />

@@ -6,6 +6,21 @@ import { useNavigate } from "react-router-dom";
 import FileBase from "react-file-base64";
 import { MuiChipsInput } from "mui-chips-input";
 
+const classes = {
+  form: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  fileInput: {
+    width: '97%',
+    margin: '10px 0',
+  },
+  buttonSubmit: {
+    margin: "10 0",
+  },
+}
+
 const Form = ({ setCurrentId, currentId }) => {
   const [tags, setTags] = useState([]); // for chip Inputs
   const [postData, setPostData] = useState({
@@ -33,16 +48,16 @@ const Form = ({ setCurrentId, currentId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name  = user?.result?.given_name + ' ' + user?.result?.family_name
+    const name = user?.result?.given_name + " " + user?.result?.family_name;
 
-    if (currentId)  dispatch(updatePost(currentId, { ...postData, name: name }));
-    else  dispatch(createPost({ ...postData, name: name}));
+    if (currentId) dispatch(updatePost(currentId, { ...postData, name: name }));
+    else dispatch(createPost({ ...postData, name: name }));
 
-    clear()
+    clear();
   };
 
   const handleAddChip = (tag) => {
-    console.log(tag)
+    console.log(tag);
     setPostData({ ...postData, tags: [...postData.tags, tag] });
   };
 
@@ -64,14 +79,14 @@ const Form = ({ setCurrentId, currentId }) => {
   }
 
   return (
-    <Paper style={{ padding: "1rem" }}>
+    <Paper style={{ padding: "1rem",margin:'10px 0' }}>
       <form
         autoComplete="off"
         noValidate
         onSubmit={handleSubmit}
-        sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+        // sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", backgroundColour:'yellow',padding:'4px' }}
       >
-        <Typography variant="h6">
+        <Typography variant="h5" sx={{textAlign:'center'}}>
           {currentId ? `Editing : ${postData.title}` : "Creating a Memory"}
         </Typography>
 
@@ -82,6 +97,7 @@ const Form = ({ setCurrentId, currentId }) => {
           fullWidth
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+          sx={{margin:'10px 0'}}
         />
 
         <TextField
@@ -96,16 +112,16 @@ const Form = ({ setCurrentId, currentId }) => {
             setPostData({ ...postData, message: e.target.value })
           }
         />
-        <div style={{ padding: "5px 0", width: "94%" }}>
+        <div style={{ padding: "3px 0" }}>
           <MuiChipsInput
             value={postData.tags}
             onDeleteChip={(chip) => handleDeleteChip(chip)}
             onChange={(chip) => handleAddChip(chip)}
-            style={{ margin: "10px 0" }}
+            style={{ margin: "10px 0" ,width: "100%" }}
             hideClearAll
           />
         </div>
-        <div>
+        <div file={classes.fileInput}>
           <FileBase
             type="file"
             multiple={false}
@@ -120,14 +136,14 @@ const Form = ({ setCurrentId, currentId }) => {
           size="large"
           type="submit"
           fullWidth
-          style={{ marginBottom: "10px" }}
+          style={{ margin: "10px 0" }}
         >
           Submit
         </Button>
         <Button
           variant="contained"
           color="secondary"
-          size="small"
+          size="large"
           fullWidth
           onClick={clear}
         >

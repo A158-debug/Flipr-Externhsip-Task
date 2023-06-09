@@ -6,12 +6,13 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 const classes = {
     appBar: {
         // borderRadius: 15,
-        margin: '30px 0',
+        marginBottom: '30px',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px 50px',
+        width:'100%'
     },
     heading: {
         color: 'rgba(0,183,255, 1)',
@@ -58,8 +59,8 @@ const Navbar = () => {
     }, [location]);
 
     return (
-        <AppBar position="static" color="inherit" style={classes.appBar}>
-            <Typography variant="h2" align="center">WriteMight</Typography>
+        <AppBar position="fixed" color="inherit" style={classes.appBar}>
+            <Typography  component={Link} to="/" variant="h2" align="center" style={{cursor:"pointer",  textDecoration:'none'}}>Connectify</Typography>
             <Toolbar style={classes.toolbar}>
                 {user?.result ? (
                     <div style={classes.profile}>
