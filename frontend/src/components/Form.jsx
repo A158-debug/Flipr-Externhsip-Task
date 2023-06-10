@@ -22,11 +22,12 @@ const classes = {
 }
 
 const Form = ({ setCurrentId, currentId }) => {
-  const [tags, setTags] = useState([]); // for chip Inputs
+  // const [tags, setTags] = useState([]);
+  const [chips, setChips] = useState([]) 
   const [postData, setPostData] = useState({
     title: "",
     message: "",
-    tags: tags,
+    tags: [],
     selectedFile: "",
   });
   const post = useSelector((state) =>
@@ -49,17 +50,24 @@ const Form = ({ setCurrentId, currentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = user?.result?.given_name + " " + user?.result?.family_name;
-
-    if (currentId) dispatch(updatePost(currentId, { ...postData, name: name }));
-    else dispatch(createPost({ ...postData, name: name }));
-
+    if (currentId) dispatch(updatePost(currentId, { ...postData, name: name,tags:chips }));
+    else dispatch(createPost({ ...postData, name: name,tags:chips }));
+    
+    console.log(postData)
+    setChips([]);
     clear();
   };
 
-  const handleAddChip = (tag) => {
-    console.log(tag);
-    setPostData({ ...postData, tags: [...postData.tags, tag] });
-  };
+  // const handleAddChip = (tag) => {
+  //   console.log(tag)
+  //   if(postData.tags.length) setPostData({ ...postData, tags: [...postData.tags, tag] });
+  //   else setPostData({ ...postData, tags: [tag] })
+  // };
+  // console.log(postData.tags)
+
+  const handleAddChip = (newChips) => {
+    setChips(newChips)
+  }
 
   const handleDeleteChip = (chipToDelete) => {
     setPostData({
@@ -67,6 +75,7 @@ const Form = ({ setCurrentId, currentId }) => {
       tags: postData.tags.filter((tag) => tag !== chipToDelete),
     });
   };
+
 
   if (!user?.result?.name) {
     return (
@@ -84,7 +93,6 @@ const Form = ({ setCurrentId, currentId }) => {
         autoComplete="off"
         noValidate
         onSubmit={handleSubmit}
-        // sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", backgroundColour:'yellow',padding:'4px' }}
       >
         <Typography variant="h5" sx={{textAlign:'center'}}>
           {currentId ? `Editing : ${postData.title}` : "Creating a Memory"}
@@ -114,14 +122,16 @@ const Form = ({ setCurrentId, currentId }) => {
         />
         <div style={{ padding: "3px 0" }}>
           <MuiChipsInput
-            value={postData.tags}
+            value={chips}
             onDeleteChip={(chip) => handleDeleteChip(chip)}
             onChange={(chip) => handleAddChip(chip)}
             style={{ margin: "10px 0" ,width: "100%" }}
-            hideClearAll
+            // hideClearAll
+            hideClearAll={false} 
+   
           />
         </div>
-        <div file={classes.fileInput}>
+        <div style={classes.fileInput}>
           <FileBase
             type="file"
             multiple={false}

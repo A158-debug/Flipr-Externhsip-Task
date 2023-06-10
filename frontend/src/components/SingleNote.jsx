@@ -74,16 +74,20 @@ const Note = ({post, setCurrentId} ) => {
     navigate(`/posts/${post._id}`);
   };
 
+  const ImageURL = 'https://images.unsplash.com/photo-1686226347032-b82efa11af93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60'
+  
+
 
   return (
-    <Card sx={{padding:'1rem'}}>
+    <Card sx={{padding:'0.5rem'}}>
       <ButtonBase
         component="span"
         name="test"
         onClick={openPost}
-        className={classes.cardAction}
+        style={classes.cardAction}
       >
-        <CardMedia  image={post?.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post?.title} />
+        <img  src={post?.selectedFile || ImageURL} alt={post?.title} />
+        {/* <img src={ImageURL} alt="" /> */}
 
         <div>
           <Typography variant="h6">{post?.name}</Typography>

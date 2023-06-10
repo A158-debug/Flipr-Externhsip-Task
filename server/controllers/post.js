@@ -34,8 +34,7 @@ export const getPost = async (req, res) => {
 
 export const createPost = async (req, res) => {
     const post = req.body;
-    
-    console.log(post);
+
     const newPostMessage = new PostSchema({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
     
     try {
@@ -50,7 +49,6 @@ export const updatePost = async (req, res) => {
     const { id } = req.params;
     const { title, message, creator, selectedFile, tags } = req.body;
     
-    console.log({ title, message, creator, selectedFile, tags })
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
     const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
