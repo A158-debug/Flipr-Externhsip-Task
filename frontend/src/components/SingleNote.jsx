@@ -84,6 +84,7 @@ const Note = ({ post, setCurrentId }) => {
 
   const user = JSON.parse(localStorage.getItem("profile"));
   const userId = user?.result.sub || user?.result?._id;
+
   // In likes we are storing ids, here we are finding either we have liked that post or not.
   const hasLikedPost = post.likes.find((like) => like === userId);
 
@@ -93,6 +94,12 @@ const Note = ({ post, setCurrentId }) => {
   };
 
   const handleLike = async () => {
+
+    if (!userId) {
+      // Handle the case when the user is not authenticated
+      // You can show a message or redirect the user to the login page
+      return;
+    }
     dispatch(likePost(post._id));
 
     if (hasLikedPost) {
