@@ -21,7 +21,8 @@ app.get('/',(req,res) => {
     res.send(`App is running`)
 })
 
-const CONNECTION_URL = process.env.MONGODB_DATABASE_URL
+// const CONNECTION_URL = process.env.MONGODB_DATABASE_URL
+const CONNECTION_URL = "mongodb+srv://A158_Debug:xtey3CIJlVbjY4Ry@cluster0.zaeyu.mongodb.net/test"
 
 mongoose.connect(CONNECTION_URL,{ useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => app.listen(PORT,()=>console.log(`server is running on localhost:${PORT}`)))
