@@ -22,7 +22,7 @@ const classes = {
 }
 
 const Form = ({ setCurrentId, currentId }) => {
-  // const [tags, setTags] = useState([]);
+ 
   const [chips, setChips] = useState([]) 
   const [postData, setPostData] = useState({
     title: "",
@@ -51,9 +51,8 @@ const Form = ({ setCurrentId, currentId }) => {
     e.preventDefault();
     const name = user?.result?.given_name + " " + user?.result?.family_name;
     if (currentId) dispatch(updatePost(currentId, { ...postData, name: name,tags:chips }));
-    else dispatch(createPost({ ...postData, name: name,tags:chips }));
-    
-    console.log(postData)
+    else dispatch(createPost({ ...postData, name: name,tags:chips },navigate));
+  
     setChips([]);
     clear();
   };

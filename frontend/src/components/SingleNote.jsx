@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, CardActions, CardContent, Typography, Button, ButtonBase, CardMedia } from '@mui/material';
-import { likePost, deletePost } from '../actions/notes';
+import { Card, CardActions, CardContent, Typography, Button, ButtonBase } from '@mui/material';
+import { likePost, deletePost,getPost } from '../actions/notes';
 import { useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -10,10 +10,10 @@ import moment from 'moment';
 
 const classes = {
   media: {
-    height: 0,
-    paddingTop: '56.25%',
+    // height: 0,
+    // paddingTop: '56.25%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    backgroundBlendMode: 'darken',
+    // backgroundBlendMode: 'darken',
   },
   border: {
     border: 'solid',
@@ -63,19 +63,18 @@ const classes = {
   },
 }
 
+const ImageURL = 'https://images.unsplash.com/photo-1686226347032-b82efa11af93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60'
+
 const Note = ({post, setCurrentId} ) => {
-  // console.log({ post, setCurrentId })
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('profile'));
-  // const userId = user?.result.googleId || user?.result?._id;
 
   const openPost = (e) => {
+    dispatch(getPost(post._id));
     navigate(`/posts/${post._id}`);
-  };
-
-  const ImageURL = 'https://images.unsplash.com/photo-1686226347032-b82efa11af93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60'
-  
+  }
 
 
   return (
@@ -86,9 +85,8 @@ const Note = ({post, setCurrentId} ) => {
         onClick={openPost}
         style={classes.cardAction}
       >
-        <img  src={post?.selectedFile || ImageURL} alt={post?.title} />
-        {/* <img src={ImageURL} alt="" /> */}
-
+        <img  src={post?.selectedFile || ImageURL} alt={post?.title} style={classes.media} />
+  
         <div>
           <Typography variant="h6">{post?.name}</Typography>
           <Typography variant="body2">{moment(post?.createdAt).fromNow()}</Typography>

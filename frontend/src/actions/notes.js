@@ -16,26 +16,27 @@ export const getPosts = (page) => async (dispatch) => {
 };
 
 export const getPost = (id) => async (dispatch) => {
+
   try {
     dispatch({ type: "START_LOADING" });
 
     const { data } = await api.fetchPost(id);
-
     dispatch({ type: "FETCH_POST", payload: { post: data } });
+    dispatch({ type: "END_LOADING" });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post,navigate) => async (dispatch) => {
   try {
     dispatch({ type: "START_LOADING" });
     const { data } = await api.createPost(post);
    
      console.log(data)
     dispatch({ type: "CREATE", payload: data });
+    navigate(`/posts/${data._id}`);
     dispatch({ type: "END_LOADING" });
-    // navigate(`/posts/${data._id}`);
   } catch (error) {
     console.log(error);
   }
