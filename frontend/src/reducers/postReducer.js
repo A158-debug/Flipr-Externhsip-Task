@@ -1,9 +1,6 @@
 
 const postReducer = (state = { isLoading: true, posts: [] }, action) => {
 
-  // console.log("state ", state)
-  // console.log("action ", action)
-
   switch (action.type) {
     case "START_LOADING":
       return { ...state, isLoading: true }
@@ -29,6 +26,9 @@ const postReducer = (state = { isLoading: true, posts: [] }, action) => {
     case "FETCH_BY_CREATOR":
       return { ...state, posts: action.payload.data };
 
+    case "FETCH_POST":
+        return { ...state, post: action.payload.post };
+
     case "CREATE":
       return { ...state, posts: [...state.posts, action.payload] }
 
@@ -41,6 +41,8 @@ const postReducer = (state = { isLoading: true, posts: [] }, action) => {
     case "COMMENT":
       return {
         ...state,
+        // return all the other posts normally
+        // change the post that just received a comment
         posts: state.posts.map((post) => {
           if (post._id === action.payload._id) return action.payload;
           return post;

@@ -7,14 +7,10 @@ import { useSelector } from 'react-redux';
 
 const Notes = ({ setCurrentId }) => {
   const { posts, isLoading } = useSelector((state) => {
-    // console.log(state)
-    // console.log(state.postReducer)
     return state.postReducer
   });
 
-  // console.log(Array.isArray(posts))
-  // console.log(posts)
-
+  
   if (!posts?.length && !isLoading) return "No Posts"
 
   return (
