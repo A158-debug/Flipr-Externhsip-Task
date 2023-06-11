@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Pagination, PaginationItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
-import { getPosts  } from "../actions/notes";
+import { getPosts  } from "../actions/posts";
 
 const Paginate = ({page}) => {
   

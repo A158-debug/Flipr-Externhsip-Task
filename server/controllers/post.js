@@ -6,7 +6,7 @@ export const getPosts = async (req, res) => {
 
     try {
         const LIMIT = 8;
-        const startIndex = (Number(page) - 1)                    // get the starting index of every page
+        const startIndex = (Number(page) - 1)                 // get the starting index of every page
         const total = await PostSchema.countDocuments({})     // it will count the total number of documents/ posts in our database
 
         // sort() --> sort the post Newer will come first then previous

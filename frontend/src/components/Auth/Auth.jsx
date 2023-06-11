@@ -88,7 +88,7 @@ const Auth = () => {
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="sm" sx={{ position: "relative", top: "8rem" }}>
         <Paper style={style.paper} elevation={3}>
           <Avatar style={style.avatar}>
             <LockIcon />
@@ -106,12 +106,9 @@ const Auth = () => {
               <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
               {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
             </Grid>
-            <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit}>
+            <Button type="submit" fullWidth variant="contained" color="primary"  size="large" style={style.submit}>
               {isSignup ? 'Sign Up' : 'Sign In'}
             </Button>
-
-            {/* ---------- Google Button ----------- */}
-            {/* <div id="signInDiv"></div> */}
 
             <GoogleLogin
               onSuccess={handleCallbackSuccess}

@@ -25,7 +25,7 @@ export const signin = async (req, res) => {
 
 export const signup = async (req, res) => {
     const { email, password, given_name, family_name } = req.body;
-    // console.log({ email, password, given_name, family_name })
+  
     try { 
         const oldUser = await UserSchema.findOne({ email });
         if (oldUser) return res.status(400).json({ message: "User already exists" });

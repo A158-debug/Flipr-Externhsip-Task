@@ -2,7 +2,7 @@ import React, { useState,useRef  } from "react";
 import { Typography, TextField, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 
-import { commentPost } from "../actions/notes";
+import { commentPost } from "../actions/posts";
 
 const classes = {
   commentsOuterContainer: {

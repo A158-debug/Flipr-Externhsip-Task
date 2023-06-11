@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 
 import { useDispatch } from "react-redux";
-import { getPostsBySearch } from "../actions/notes";
+import { getPostsBySearch } from "../actions/posts";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { MuiChipsInput } from "mui-chips-input";
 
-import Notes from "./AllNotes";
+import Notes from "./AllPosts";
 import Form from "./Form";
 import Pagination from "./Pagination";
 
@@ -61,13 +61,13 @@ const Home = () => {
   return (
     <>
       <Grow in>
-        <Container maxWidth="xl" sx={{ position: "relative", top: "8rem" }}>
+        <Container maxWidth="xl" sx={{ position: "relative", top: "8rem", marginBottom:'9rem' }}>
           <Grid
             container
             justify="space-between"
             alignItems="stretch"
             spacing={3}
-            style={{ width: "100%" }}
+            sx={{ width :"100%" }}
           >
             <Grid item xs={12} sm={6} md={8}>
               <Notes setCurrentId={setCurrentId} />
@@ -103,7 +103,7 @@ const Home = () => {
               </Paper>
               <Form currentId={currentId} setCurrentId={setCurrentId}/>
               {!searchQuery && !tags.length && (
-                <Paper>
+                <Paper sx={{padding:'10px', marginTop:2}}>
                   <Pagination page={page} />
                 </Paper>
               )}

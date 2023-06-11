@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
-import { createPost, updatePost } from "../actions/notes";
+import { createPost, updatePost } from "../actions/posts";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileBase from "react-file-base64";
@@ -50,19 +50,14 @@ const Form = ({ setCurrentId, currentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = user?.result?.given_name + " " + user?.result?.family_name;
-    if (currentId) dispatch(updatePost(currentId, { ...postData, name: name,tags:chips }));
+    if (currentId) {
+     if(postData?.title) dispatch(updatePost(currentId, { ...postData, name: name,tags:chips }));
+    }
     else dispatch(createPost({ ...postData, name: name,tags:chips },navigate));
   
     setChips([]);
     clear();
   };
-
-  // const handleAddChip = (tag) => {
-  //   console.log(tag)
-  //   if(postData.tags.length) setPostData({ ...postData, tags: [...postData.tags, tag] });
-  //   else setPostData({ ...postData, tags: [tag] })
-  // };
-  // console.log(postData.tags)
 
   const handleAddChip = (newChips) => {
     setChips(newChips)
@@ -78,7 +73,7 @@ const Form = ({ setCurrentId, currentId }) => {
 
   if (!user?.result?.name) {
     return (
-      <Paper elevation={6}>
+      <Paper sx={{marginTop:'4px',padding:'10px'}}>
         <Typography variant="h6" align="center">
           Please Sign In to create your own memories and like other's memories.
         </Typography>
