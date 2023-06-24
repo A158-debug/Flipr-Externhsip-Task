@@ -21,9 +21,19 @@ import { useNavigate } from "react-router-dom";
 
 const classes = {
   media: {
-    // backgroundBlendMode: 'darken',
+    height: 0,
+    paddingTop: "56.25%", // 16:9 aspect ratio (change this value according to your needs)
+    position: "relative",
+    overflow: "hidden",
+  },
+  mediaImage: {
+    // Make the image responsive
+    width: "100%",
+    height: "100%",
+    position: "absolute",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    // position: "relative",
+    top: 0,
+    left: 0,
   },
   border: {
     border: "solid",
@@ -44,7 +54,6 @@ const classes = {
     top: "20px",
     left: "20px",
     color: "white",
-   
   },
   overlay2: {
     position: "absolute",
@@ -86,7 +95,7 @@ const Note = ({ post, setCurrentId }) => {
   const userId = user?.result.sub || user?.result?._id;
 
   // In likes we are storing ids, here we are finding either we have liked that post or not.
-  const hasLikedPost = post.likes.find((like) => like === userId);
+  const hasLikedPost = post?.likes?.find((like) => like === userId);
 
   const openPost = (e) => {
     dispatch(getPost(post._id));
@@ -94,7 +103,6 @@ const Note = ({ post, setCurrentId }) => {
   };
 
   const handleLike = async () => {
-
     if (!userId) {
       // Handle the case when the user is not authenticated
       // You can show a message or redirect the user to the login page
@@ -115,7 +123,7 @@ const Note = ({ post, setCurrentId }) => {
     // if there is some like on the post
     // then 2 cases arise either liked or not
     if (likes.length > 0) {
-      return likes.find((like) => like === userId) ? (
+      return likes?.find((like) => like === userId) ? (
         // if our id present in like, then 2 cases
         // like --> [ your_id,....]
         // like --> [ your_id, some_one_else_id] only 2 like ---> This case arise when we like first time
@@ -145,18 +153,20 @@ const Note = ({ post, setCurrentId }) => {
   };
 
   return (
-    <Card sx={{ padding: "0.5rem"}} style={classes.card}>
+    <Card sx={{ padding: "0.5rem" }} style={classes.card}>
       <ButtonBase
         component="span"
         name="test"
         onClick={openPost}
         style={classes.cardAction}
       >
-        <img
-          src={post?.selectedFile || ImageURL}
-          alt={post?.title}
-          style={classes.media}
-        />
+        <div style={classes.media}>
+          <img
+            src={post?.selectedFile || ImageURL}
+            alt={post?.title}
+            style={classes.mediaImage}
+          />
+        </div>
 
         <div style={classes.overlay}>
           <Typography variant="h6">{post?.name}</Typography>
@@ -171,8 +181,13 @@ const Note = ({ post, setCurrentId }) => {
           </Typography>
         </div>
 
-        <Typography gutterBottom variant="h5" component="h2" style={classes.title}>
-         {post?.title}
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="h2"
+          style={classes.title}
+        >
+          {post?.title}
         </Typography>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">

@@ -12,12 +12,15 @@ const auth = async (req, res, next) => {
     const isCustomAuth = token?.length < 500;
     
     let decodedData;
+ 
 
+    //our toeken
     if (token && isCustomAuth) {   
 
       decodedData = jwt.verify(token, secret);
       req.userId = decodedData?.id;
     } 
+    // otherwise google token
     else {
       decodedData = jwt.decode(token);
       req.userId = decodedData?.sub;
