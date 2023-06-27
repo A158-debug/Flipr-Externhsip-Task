@@ -14,7 +14,7 @@ export const getPosts = async (req, res) => {
         // skip() --> suppose I am on page 2 then it skip the posts of previous page start from the index of 2nd page
         const posts = await PostSchema.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex)
         
-        console.log(posts)
+        // console.log(posts)
         res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) })
     } catch (error) {
         console.log(error)
