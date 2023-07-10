@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-// const API = axios.create({ baseURL: 'https://calm-ruby-fawn-tie.cyclic.app/' });
-const API = axios.create({ baseURL: '' });
+const API = axios.create({ baseURL: 'https://calm-ruby-fawn-tie.cyclic.app/' });
+// const API = axios.create({ baseURL: 'http://localhost:5000/' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
     req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
   }
-  console.log(req)
   return req;
 });
 

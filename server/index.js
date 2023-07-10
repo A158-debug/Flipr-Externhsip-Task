@@ -25,7 +25,6 @@ app.use(cors())
 //   }));
 
 
-
 app.use('/posts', postsRoutes)
 app.use('/user', userRoutes)
 
