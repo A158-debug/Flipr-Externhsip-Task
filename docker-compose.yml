@@ -1,29 +1,40 @@
+# The version of the docker-compose
 version: '3.8'
+# Telling docker-compose to build the client and server images and run them in containers.
 services:
-  api:
+  server:
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: node_backend_api
-    container_name: node_backend
+    image: server_image
+    container_name: server_container
     restart: unless-stopped
     ports:
       - 5000:5000
     volumes:
        - ./server:/app
+    networks:
+      - app-network
+     
 
   client:
+   # Telling docker-compose to build the client image using the Dockerfile in the client directory.
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: react_frontend_app
-    container_name: react_frontend
+    image: client_image
+    container_name: client_container
     restart: unless-stopped
 
     ports:
     - 3000:3000
+
+    # Mapping the client directory on the host machine to the /app directory on the container.
     volumes:
     - ./frontend:/app
+    networks:
+      - app-network
+ 
 
 networks:
   app-network:

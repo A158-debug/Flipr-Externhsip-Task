@@ -14,7 +14,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }))
 // app.use(cors())
 
 app.use(cors({
-    origin: 'https://connectify-rho.vercel.app/'
+    origin: '*'
 }));
 
 // app.use(cors({ origin: '*', credentials: true, }))
@@ -36,8 +36,8 @@ app.get("/", (req, res) => {
     res.status(201).json({ message: "Connected to Backend!" });
 });
 
-// const CONNECTION_URL = process.env.MONGODB_DATABASE_URL
-const CONNECTION_URL = "mongodb+srv://A158_Debug:xtey3CIJlVbjY4Ry@cluster0.zaeyu.mongodb.net/test"
+const CONNECTION_URL = process.env.MONGODB_DATABASE_URL
+// const CONNECTION_URL = ""
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(PORT, () => console.log(`App is Listening on PORT:${PORT}`)))
