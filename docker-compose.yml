@@ -13,6 +13,7 @@ services:
       - 5000:5000
     volumes:
        - ./server:/app
+       - /app/node_modules
     networks:
       - app-network
      
@@ -25,15 +26,16 @@ services:
     image: client_image
     container_name: client_container
     restart: unless-stopped
-
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     ports:
-    - 3000:3000
-
-    # Mapping the client directory on the host machine to the /app directory on the container.
+    - 3000:80
     volumes:
     - ./frontend:/app
+    - /app/node_modules
     networks:
       - app-network
+    # command: npm start
  
 
 networks:
