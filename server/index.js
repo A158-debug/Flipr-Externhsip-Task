@@ -20,7 +20,7 @@ app.use(cors({
 // app.use(cors({ origin: '*', credentials: true, }))
 // app.use(cors({
 //     origin: (origin, callback) => {
-//       if (origin === 'http://localhost:3000' || origin === 'https://connectify-rho.vercel.app') {
+//       if (origin === 'http://localhost:3000' || origin === '') {
 //         callback(null, true);
 //       } else {
 //         callback(new Error('Not allowed by CORS'));
@@ -37,8 +37,7 @@ app.get("/", (req, res) => {
 });
 
 const CONNECTION_URL = process.env.MONGODB_DATABASE_URL
-// const CONNECTION_URL = ""
-
+console.log(CONNECTION_URL)
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(PORT, () => console.log(`App is Listening on PORT:${PORT}`)))
     .catch((error) => console.log(error))
