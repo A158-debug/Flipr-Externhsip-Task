@@ -14,7 +14,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }))
 // app.use(cors())
 
 app.use(cors({
-    origin: 'https://connectify-rho.vercel.app'
+    origin: "*"
 }));
 
 // app.use(cors({ origin: '*', credentials: true, }))
