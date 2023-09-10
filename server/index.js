@@ -1,10 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path'
 import 'dotenv/config'
 
 import userRoutes from './routes/user.js'
 import postsRoutes from './routes/posts.js'
+
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const app = express();
 const PORT = process.env.PORT || 8080;
