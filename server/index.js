@@ -28,9 +28,9 @@ app.use(express.static(path.join(__dirname, '../frontend/build', 'index.html')))
 app.use('/posts', postsRoutes)
 app.use('/user', userRoutes)
 
-app.get("/", (req, res) => {
-    res.status(201).json({ message: "Connected to Backend!" });
-});
+// app.get("/", (req, res) => {
+//     res.status(201).json({ message: "Connected to Backend!" });
+// });
 
 app.get("*",(req,res)=>{
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
