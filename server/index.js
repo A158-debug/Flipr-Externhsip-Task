@@ -33,7 +33,7 @@ app.use('/user', userRoutes)
 // });
 
 app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 })
 
 // const CONNECTION_URL = process.env.MONGODB_DATABASE_URL
