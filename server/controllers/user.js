@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';  //------> To hash the password
 import jwt from "jsonwebtoken";
 import UserSchema from "../models/userModel.js";
 
-const secret = 'Lamborghini';
+const secret = process.env.SECRET_KEY;
 
 export const signin = async (req, res) => {
     const { email, password } = req.body;

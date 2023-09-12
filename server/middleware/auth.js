@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const secret = 'Lamborghini';
+const secret = process.env.SECRET_KEY;
 
 //  I want to like the post
 //  click the like button ==> auth middleware (next) ==> like controller
