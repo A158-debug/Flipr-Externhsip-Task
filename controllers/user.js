@@ -1,14 +1,13 @@
-import bcrypt from 'bcryptjs';  //------> To hash the password
-import jwt from "jsonwebtoken";
-import UserSchema from "../models/userModel.js";
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const UserSchema = require('../models/userModel.js');
 
 const secret = process.env.SECRET_KEY;
 
-export const signin = async (req, res) => {
+exports.signin = async (req, res) => {
     const { email, password } = req.body;
     
     try {
-
         const oldUser = await UserSchema.findOne({ email });
         if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
 
@@ -17,13 +16,12 @@ export const signin = async (req, res) => {
 
         const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
         res.status(200).json({ result: oldUser, token });
-
     } catch (err) {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
 
-export const signup = async (req, res) => {
+exports.signup = async (req, res) => {
     const { email, password, given_name, family_name } = req.body;
   
     try { 
@@ -35,7 +33,6 @@ export const signup = async (req, res) => {
 
         const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
         res.status(201).json({ result, token });
-
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
         console.log(error);
