@@ -20,14 +20,14 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors({ origin: '*', credentials: true }));
 
 // For production level
-// app.use(express.static(path.join(__dirname, './client/build')));
+app.use(express.static(path.join(__dirname, './client/build')));
 
 app.use('/posts', postsRoutes);
 app.use('/user', userRoutes);
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, './client/build/index.html'));
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './client/build/index.html'));
+});
 
 const CONNECTION_URL = process.env.MONGODB_DATABASE_URL;
 
