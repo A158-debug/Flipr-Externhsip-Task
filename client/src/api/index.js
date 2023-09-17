@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API = axios.create({ baseURL: 'https://long-rose-betta-hat.cyclic.cloud/' });
-const API = axios.create({ baseURL: 'http://localhost:8080/' });
+const API = axios.create({ baseURL: 'https://kind-hose-hare.cyclic.cloud' });
+// const API = axios.create({ baseURL: 'http://localhost:8080/' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
