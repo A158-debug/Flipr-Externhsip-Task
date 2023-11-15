@@ -5,7 +5,7 @@ import { CircularProgress, Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 // help us to reterive tha data from global store
 
-const Notes = ({ setCurrentId }) => {
+const Notes = ({ setCurrentId,setVisible,visible }) => {
   const { posts, isLoading } = useSelector((state) => {
     return state.postReducer
   });
@@ -18,7 +18,7 @@ const Notes = ({ setCurrentId }) => {
       <Grid container alignItems="stretch"  spacing={3}>
         {posts?.map((post) => (
           <Grid key={post._id} item xs={12} sm={6} md={6}  >
-            <Note post={post} setCurrentId={setCurrentId} />
+            <Note post={post} setCurrentId={setCurrentId} visible={visible} setVisible={setVisible}/>
           </Grid>
         ))}
       </Grid>

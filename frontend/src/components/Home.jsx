@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Grow,
-  Grid,
-  Paper,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Container, Grow, Grid, Paper, TextField, Button } from "@mui/material";
+
+
+import Alerts from "./Alerts";
 
 import { useDispatch } from "react-redux";
 import { getPostsBySearch } from "../actions/posts";
@@ -31,6 +27,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [tags, setTags] = useState([]); // for chip Inputs
+  const [visible, setVisible] = useState(false);
 
   const query = useQuery();
   const page = query.get("page") || 1;
@@ -54,22 +51,26 @@ const Home = () => {
 
   const handleDeleteChip = (tagToDelete) =>
     setTags(tags.filter((tag) => tag !== tagToDelete));
-    
+
   const handleAddChip = (tagValue) => setTags([...tags, tagValue]);
 
   return (
     <>
       <Grow in>
-        <Container maxWidth="xl" sx={{ position: "relative", top: "8rem", marginBottom:'9rem' }}>
+        <Container
+          maxWidth="xl"
+          sx={{ position: "relative", top: "8rem", marginBottom: "9rem" }}
+        >
+         <Alerts visible={visible}/>
           <Grid
             container
             justify="space-between"
             alignItems="stretch"
             spacing={3}
-            sx={{ width :"100%" }}
+            sx={{ width: "100%" }}
           >
             <Grid item xs={12} sm={6} md={8}>
-              <Notes setCurrentId={setCurrentId} />
+              <Notes setCurrentId={setCurrentId} visible={visible} setVisible={setVisible} />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Paper style={{ padding: "1rem" }}>
@@ -87,7 +88,7 @@ const Home = () => {
                   value={tags}
                   onDeleteChip={(chip) => handleDeleteChip(chip)}
                   onChange={(chip) => handleAddChip(chip)}
-                  style={{ margin: "10px 0",width: "100%"  }}
+                  style={{ margin: "10px 0", width: "100%" }}
                   hideClearAll
                 />
                 <Button
@@ -100,9 +101,9 @@ const Home = () => {
                   Search
                 </Button>
               </Paper>
-              <Form currentId={currentId} setCurrentId={setCurrentId}/>
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
               {!searchQuery && !tags.length && (
-                <Paper sx={{padding:'10px', marginTop:2}}>
+                <Paper sx={{ padding: "10px", marginTop: 2 }}>
                   <Pagination page={page} />
                 </Paper>
               )}

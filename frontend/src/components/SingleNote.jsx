@@ -86,7 +86,7 @@ const classes = {
 const ImageURL =
   "https://images.unsplash.com/photo-1686226347032-b82efa11af93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60";
 
-const Note = ({ post, setCurrentId }) => {
+const Note = ({ post, setCurrentId, visible, setVisible }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [likes, setLikes] = useState(post?.likes);
@@ -102,30 +102,45 @@ const Note = ({ post, setCurrentId }) => {
     navigate(`/posts/${post._id}`);
   };
 
+  const showAlert = () => {
+    setVisible((prev) => !prev);
+    setTimeout(() => {
+      setVisible(false);
+    }, 2000);
+  };
+
   const handleLike = async () => {
     if (!userId) {
       // Handle the case when the user is not authenticated
       // You can show a message or redirect the user to the login page
+      // console.log("Please login to like a post.")
+      showAlert();
       return;
     }
     dispatch(likePost(post._id));
-
+    
+    // console.log("hasLikedPost: ", hasLikedPost);
     if (hasLikedPost) {
       // if I again click on it after like then it will dislike it
       // it remove the id from the list
+      // console.log("Remove id in like array");
       setLikes(post.likes.filter((id) => id !== userId));
     } else {
+      // console.log("Add id in like array");
       setLikes([...post.likes, userId]);
     }
   };
 
   const Likes = () => {
     // if there is some like on the post
-    // then 2 cases arise either liked or not
+    // then two cases arise either
+    //          1) I have already liked that post or
+    //          2) I have not liked that post till know
+
     if (likes.length > 0) {
       return likes?.find((like) => like === userId) ? (
         // if our id present in like, then 2 cases
-        // like --> [ your_id,....]
+        // like --> [ your_id,....many more]
         // like --> [ your_id, some_one_else_id] only 2 like ---> This case arise when we like first time
         <>
           <ThumbUpIcon fontSize="small" />
@@ -135,7 +150,9 @@ const Note = ({ post, setCurrentId }) => {
             : `${likes.length} like ${likes.length > 1 ? "s" : ""}`}
         </>
       ) : (
+
         // If our id is not present in like
+        // Mean I have not liked that post till now
         <>
           <ThumbUpOffAltIcon fontSize="small" />
           &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
@@ -143,8 +160,8 @@ const Note = ({ post, setCurrentId }) => {
       );
     }
 
+    // If there is no like in the post (new post) then it just only show Like button
     return (
-      // if there is no like then it just only show Like button
       <>
         <ThumbUpOffAltIcon fontSize="small" />
         &nbsp;Like
@@ -207,7 +224,7 @@ const Note = ({ post, setCurrentId }) => {
               color="primary"
               onClick={() => setCurrentId(post._id)}
             >
-              <MoreHorizIcon fontSize="small" /> Update{" "}
+              <MoreHorizIcon fontSize="small" /> Update
             </Button>
             <Button
               size="small"
