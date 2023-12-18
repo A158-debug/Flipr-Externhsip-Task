@@ -34,6 +34,7 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
 
   const searchPost = () => {
+    console.log(search.trim())
     if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       navigate(
