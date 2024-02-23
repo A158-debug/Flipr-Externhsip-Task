@@ -21,26 +21,26 @@ import { useNavigate } from "react-router-dom";
 
 const classes = {
   media: {
-    height: 0,
+    height: "2.5rem",
     paddingTop: "56.25%", // 16:9 aspect ratio (change this value according to your needs)
     position: "relative",
     overflow: "hidden",
+    background: "black"
   },
   mediaImage: {
     // Make the image responsive
     width: "100%",
     height: "100%",
+    objectFit: "cover",
     position: "absolute",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    opacity: "0.7",
     top: 0,
     left: 0,
   },
   border: {
     border: "solid",
   },
-  fullHeightCard: {
-    height: "100%",
-  },
+
   card: {
     display: "flex",
     flexDirection: "column",
@@ -55,27 +55,20 @@ const classes = {
     left: "20px",
     color: "white",
   },
-  overlay2: {
-    position: "absolute",
-    top: "20px",
-    right: "20px",
-    color: "white",
-  },
   grid: {
     display: "flex",
   },
   details: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "10px",
+    padding: "10px",
   },
   title: {
     padding: "0 16px",
   },
   cardActions: {
-    padding: "0 16px 8px 16px",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   cardAction: {
     display: "block",
@@ -87,6 +80,7 @@ const ImageURL =
   "https://images.unsplash.com/photo-1686226347032-b82efa11af93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60";
 
 const Note = ({ post, setCurrentId, visible, setVisible }) => {
+  console.log("Post: ", post);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [likes, setLikes] = useState(post?.likes);
@@ -186,7 +180,7 @@ const Note = ({ post, setCurrentId, visible, setVisible }) => {
         </div>
 
         <div style={classes.overlay}>
-          <Typography variant="h6">{post?.name}</Typography>
+          <Typography variant="inherit">{post?.name}</Typography>
           <Typography variant="body2">
             {moment(post?.createdAt).fromNow()}
           </Typography>
@@ -212,6 +206,7 @@ const Note = ({ post, setCurrentId, visible, setVisible }) => {
           </Typography>
         </CardContent>
       </ButtonBase>
+
       <CardActions style={classes.cardActions}>
         <Button size="small" color="primary" onClick={handleLike}>
           <Likes />

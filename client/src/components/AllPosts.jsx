@@ -15,9 +15,9 @@ const Notes = ({ setCurrentId,setVisible,visible }) => {
 
   return (
     isLoading ? <CircularProgress /> : (
-      <Grid container alignItems="stretch"  spacing={3}>
+      <Grid container alignItems="stretch"  spacing={1}>
         {posts?.map((post) => (
-          <Grid key={post._id} item xs={12} sm={6} md={6}  >
+          <Grid key={post._id} item xs={12} sm={6} md={4}  >
             <Note post={post} setCurrentId={setCurrentId} visible={visible} setVisible={setVisible}/>
           </Grid>
         ))}

@@ -34,7 +34,6 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
 
   const searchPost = () => {
-    console.log(search.trim())
     if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       navigate(
@@ -60,20 +59,24 @@ const Home = () => {
       <Grow in>
         <Container
           maxWidth="xl"
-          sx={{ position: "relative", top: "8rem", marginBottom: "9rem" }}
+          sx={{ position: "relative", top: "8rem", marginBottom:"9rem" }}
         >
          <Alerts visible={visible}/>
           <Grid
             container
             justify="space-between"
             alignItems="stretch"
-            spacing={3}
-            sx={{ width: "100%" }}
+            spacing={2}
+            // sx={{ width: "100%" }}
           >
-            <Grid item xs={12} sm={6} md={8}>
+            <Grid item xs={12} sm={7} md={9}>
               <Notes setCurrentId={setCurrentId} visible={visible} setVisible={setVisible} />
             </Grid>
-            <Grid item xs={12} sm={6} md={4}>
+
+            {/* Create a new memory */}
+            <Grid item xs={12} sm={5} md={3}>
+
+               {/* Search Functionality */}
               <Paper style={{ padding: "1rem" }}>
                 <TextField
                   onKeyDown={handleKeyPress}
@@ -102,12 +105,15 @@ const Home = () => {
                   Search
                 </Button>
               </Paper>
+
               <Form currentId={currentId} setCurrentId={setCurrentId} />
+
               {!searchQuery && !tags.length && (
                 <Paper sx={{ padding: "10px", marginTop: 2 }}>
                   <Pagination page={page} />
                 </Paper>
               )}
+
             </Grid>
           </Grid>
         </Container>
