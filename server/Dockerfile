@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:21.6.0-alpine3.19
 
 # We use nodemon to restart the server every time there's a change
 # RUN npm install -g nodemon
